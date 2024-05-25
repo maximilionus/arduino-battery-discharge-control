@@ -3,5 +3,9 @@ profiles:
     fqbn: arduino:avr:uno
     platforms:
       - platform: arduino:avr (1.8.6)
+    libraries:
+      - Adafruit GFX Library (1.11.5)
+      - Adafruit BusIO (1.14.1)
+      - Adafruit SSD1306 (2.5.7)
 
 default_profile: uno
