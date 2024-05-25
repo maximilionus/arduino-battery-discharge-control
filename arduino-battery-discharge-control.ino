@@ -1,6 +1,6 @@
 #define POWER_RELAY_PIN 2
 #define VOLTAGE_IN_PIN A0
-#define VOLTAGE_MIN_RAW 877
+#define VOLTAGE_MIN_RAW 818
 
 
 int getVoltageRaw() {
@@ -36,5 +36,5 @@ void loop() {
         while (true) {}
     }
 
-    delay(1000);
+    delay(10000);
 }
