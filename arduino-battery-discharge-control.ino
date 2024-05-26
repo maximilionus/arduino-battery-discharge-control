@@ -51,7 +51,12 @@ void loop() {
 
     if (current_voltage <= VOLTAGE_MIN_RAW) {
         switchRelay(false);
-        Serial.println(F("Minimal charge reached, relay off"));
+        Serial.println(F("Minimal charge reached"));
+
+        display.invertDisplay(true);
+        display.println(F("> DONE"));
+        display.display();
+
         for (;;);
     }
 
