@@ -18,8 +18,9 @@ int getVoltageRaw() {
 }
 
 float getVoltageVolt() {
-    int raw = getVoltageRaw();
-    return (float)raw * VREF * ((DIV_R1 + DIV_R2) / DIV_R2) / 1024;
+    float raw = (float)getVoltageRaw();
+    //return raw * VREF * ((DIV_R1 + DIV_R2) / DIV_R2) / 1024.0;
+    return raw * (VREF / 1024.0) * ((DIV_R1 + DIV_R2) / DIV_R2);
 }
 
 void switchRelay(bool enable) {
@@ -55,8 +56,8 @@ void loop() {
     display.setCursor(0, 0);
     display.print(F("CURR: ")); display.println(current_voltage);
     display.print(F("MIN: ")); display.println(VOLTAGE_MIN_RAW);
-    display.print(F("V: ")); display.println(getVoltageVolt());
-    display.print(F("V0: ")); display.println(analogRead(VOLTAGE_IN_PIN) / 1024.0 * VREF);
+    display.print(F("V-CALC: ")); display.println(getVoltageVolt());
+    display.print(F("V-A0: ")); display.println(analogRead(VOLTAGE_IN_PIN) / 1024.0 * VREF); // Debug
     display.display();
 
     if (current_voltage <= VOLTAGE_MIN_RAW) {
