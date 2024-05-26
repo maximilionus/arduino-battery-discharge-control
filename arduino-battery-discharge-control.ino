@@ -4,7 +4,7 @@
 #define POWER_RELAY_PIN 2
 #define VOLTAGE_IN_PIN A0
 #define VOLTAGE_MIN 10.80
-#define VREF 4.9
+#define VOLTAGE_REF 4.9
 #define DIV_R1 1975.0
 #define DIV_R2 1130.0
 #define DISPLAY_ADDR 0x3C
@@ -19,7 +19,7 @@ int getVoltageRaw() {
 
 float getVoltageVolt() {
     float raw = (float)getVoltageRaw();
-    return raw * (VREF / 1024.0) * ((DIV_R1 + DIV_R2) / DIV_R2);
+    return raw * (VOLTAGE_REF / 1024.0) * ((DIV_R1 + DIV_R2) / DIV_R2);
 }
 
 void switchRelay(bool enable) {
