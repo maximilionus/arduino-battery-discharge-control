@@ -61,7 +61,7 @@ void loop() {
         switchRelay(false);
         Serial.println(F("Minimal charge reached"));
 
-        display.invertDisplay(true);
+        display.setTextColor(SSD1306_BLACK, SSD1306_WHITE);
         display.println(F("> DONE"));
         display.display();
 
