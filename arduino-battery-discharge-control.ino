@@ -3,8 +3,8 @@
 
 #define POWER_RELAY_PIN 2
 #define VOLTAGE_IN_PIN A0
-#define VOLTAGE_MIN_RAW 818
-#define VREF 4.8
+#define VOLTAGE_MIN 10.80
+#define VREF 4.9
 #define DIV_R1 1975.0
 #define DIV_R2 1130.0
 #define DISPLAY_ADDR 0x3C
@@ -19,7 +19,6 @@ int getVoltageRaw() {
 
 float getVoltageVolt() {
     float raw = (float)getVoltageRaw();
-    //return raw * VREF * ((DIV_R1 + DIV_R2) / DIV_R2) / 1024.0;
     return raw * (VREF / 1024.0) * ((DIV_R1 + DIV_R2) / DIV_R2);
 }
 
@@ -47,20 +46,18 @@ void setup() {
 }
 
 void loop() {
-    int current_voltage = getVoltageRaw();
+    float current_voltage = getVoltageVolt();
 
     Serial.print(current_voltage);
-    Serial.println(" raw V");
+    Serial.println(" Volts");
 
     display.clearDisplay();
     display.setCursor(0, 0);
-    display.print(F("CURR: ")); display.println(current_voltage);
-    display.print(F("MIN: ")); display.println(VOLTAGE_MIN_RAW);
-    display.print(F("V-CALC: ")); display.println(getVoltageVolt());
-    display.print(F("V-A0: ")); display.println(analogRead(VOLTAGE_IN_PIN) / 1024.0 * VREF); // Debug
+    display.print(F("CUR ")); display.println(current_voltage);
+    display.print(F("MIN ")); display.println(VOLTAGE_MIN);
     display.display();
 
-    if (current_voltage <= VOLTAGE_MIN_RAW) {
+    if (current_voltage <= VOLTAGE_MIN) {
         switchRelay(false);
         Serial.println(F("Minimal charge reached, relay off"));
         for (;;);
