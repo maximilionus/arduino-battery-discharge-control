@@ -4,6 +4,7 @@
 #define POWER_RELAY_PIN 2
 #define VOLTAGE_IN_PIN A0
 #define VOLTAGE_MIN_RAW 818
+#define DISPLAY_ADDR 0x3C
 
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
@@ -29,14 +30,11 @@ void setup() {
 
     switchRelay(true);
 
-    display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-
-    display.display();
-    delay(5000);
+    display.begin(SSD1306_SWITCHCAPVCC, DISPLAY_ADDR);
     display.setTextSize(2);
-    display.setTextColor(SSD1306_WHITE); // Draw white text
+    display.setTextColor(SSD1306_WHITE);
 
-    Serial.println(F("Discharging started"));
+    Serial.println(F("Discharging"));
 }
 
 void loop() {
@@ -54,7 +52,7 @@ void loop() {
     if (current_voltage <= VOLTAGE_MIN_RAW) {
         switchRelay(false);
         Serial.println(F("Minimal charge reached, relay off"));
-        while (true) {}
+        for (;;);
     }
 
     delay(10000);
