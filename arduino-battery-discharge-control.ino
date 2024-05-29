@@ -1,13 +1,16 @@
 #include <Wire.h>
 #include <Adafruit_SSD1306.h>
 
+
 #define POWER_RELAY_PIN 2
 #define VOLTAGE_IN_PIN A0
+
 #define VOLTAGE_MIN 10.80
 #define VOLTAGE_REF 4.9
 #define DIV_R1 1975.0
 #define DIV_R2 1130.0
 #define DISPLAY_ADDR 0x3C
+#define CHECK_DELAY 10000
 
 
 Adafruit_SSD1306 display(128, 64, &Wire, -1);
@@ -68,5 +71,5 @@ void loop() {
         for (;;);
     }
 
-    delay(10000);
+    delay(CHECK_DELAY);
 }
